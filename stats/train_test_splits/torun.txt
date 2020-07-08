@@ -1,0 +1,12 @@
+python prepare_train_test.py Table 1 train
+python prepare_train_test.py Table 1 test
+python prepare_train_test.py Table 2 train
+python prepare_train_test.py Table 2 test
+python prepare_train_test.py Table 3 train
+python prepare_train_test.py Table 3 test
+python prepare_train_test.py StorageFurniture 1 train
+python prepare_train_test.py StorageFurniture 1 test
+python prepare_train_test.py StorageFurniture 2 train
+python prepare_train_test.py StorageFurniture 2 test
+python prepare_train_test.py StorageFurniture 3 train
+python prepare_train_test.py StorageFurniture 3 test

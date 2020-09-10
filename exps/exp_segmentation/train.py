@@ -1,7 +1,3 @@
-"""
-    For models: model_v2.py, etc. (GRU)
-"""
-
 import os
 import time
 import sys
@@ -176,7 +172,6 @@ def forward(batch, data_features, network, conf, \
     input_img = batch[data_features.index('img')][0]                                                    # 3 x H x W
     input_img = input_img.repeat(input_total_part_cnt, 1, 1, 1)                            # part_cnt 3 x H x W
     input_pts = batch[data_features.index('pts')][0].squeeze(0)[:input_total_part_cnt]                             # part_cnt x N x 3
-    # input_sem_one_hot = batch[data_features.index('sem_one_hot')][0].squeeze(0)[:input_total_part_cnt]             # part_cnt x K
     input_ins_one_hot = batch[data_features.index('ins_one_hot')][0].squeeze(0)[:input_total_part_cnt]             # part_cnt x max_similar_parts
     input_similar_part_cnt = batch[data_features.index('similar_parts_cnt')][0].squeeze(0)[:input_total_part_cnt]  # part_cnt x 1    
     input_box_size = batch[data_features.index('box_size')][0].squeeze(0)[:input_total_part_cnt]
@@ -196,7 +191,6 @@ def forward(batch, data_features, network, conf, \
         cur_box_size = batch[data_features.index('box_size')][batch_index].squeeze(0)[:cur_input_cnt]
         input_box_size = torch.cat( (input_box_size, cur_box_size), dim=0)   
         input_pts = torch.cat((input_pts, batch[data_features.index('pts')][batch_index].squeeze(0)[:cur_input_cnt]), dim=0)                            # B x max_parts x N x 3
-        # input_sem_one_hot = torch.cat((input_sem_one_hot, batch[data_features.index('sem_one_hot')][batch_index].squeeze(0)[:cur_input_cnt]), dim=0)    # B x max_parts x K
         input_ins_one_hot = torch.cat((input_ins_one_hot, batch[data_features.index('ins_one_hot')][batch_index].squeeze(0)[:cur_input_cnt]), dim=0)    # B x max_parts x max_similar_parts
         input_total_part_cnt.append(batch[data_features.index('total_parts_cnt')][batch_index])                             # 1
         input_similar_part_cnt = torch.cat((input_similar_part_cnt, batch[data_features.index('similar_parts_cnt')][batch_index].squeeze(0)[:cur_input_cnt]), dim=0)  # B x max_parts x 2    
@@ -209,7 +203,6 @@ def forward(batch, data_features, network, conf, \
     input_box_size = input_box_size.to(conf.device)
     batch_size = input_img.shape[0]
     num_point = input_pts.shape[1]
-    #num_sem = input_sem_one_hot.shape[1]
 
     # forward through the network
     pred_masks = network(input_img - 0.5, input_pts, input_ins_one_hot, input_box_size, input_total_part_cnt)
@@ -301,13 +294,6 @@ def forward(batch, data_features, network, conf, \
                     Image.fromarray(cur_gt_mask).save(os.path.join(gt_mask_dir, fn))
                     cur_pred_mask = (matched_pred_mask_all[i].cpu().numpy() > 0.5).astype(np.uint8) * 255
                     Image.fromarray(cur_pred_mask).save(os.path.join(pred_mask_dir, fn))
-                    
-
-                    #with open(os.path.join(info_dir, fn.replace('.png', '.txt')), 'w') as fout:
-                        # fout.write('shape_id: %s, view_id: %s\n' % (\
-                                # batch[data_features.index('shape_id')][i],\
-                                # batch[data_features.index('view_id')][i]))
-                        #fout.write('ins_one_hot: %s\n sem_one_hot: %s\n' % (str(input_ins_one_hot[i]), str(input_sem_one_hot[i])))   
                 
             if batch_ind == conf.num_batch_every_visu - 1:
                 # visu html

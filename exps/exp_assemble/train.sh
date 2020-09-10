@@ -1,14 +1,14 @@
 python ./train.py  \
-    --exp_suffix 'refine-C3-nodelta' \
-    --model_version 'model_refine_nodelta' \
+    --exp_suffix 'None' \
+    --model_version 'model' \
     --category 'Chair-3-final' \
-    --data_dir '/orion/u/kaichun/projects/assembly/partnet_assembly_dataset/' \
+    --data_dir '' \
     --seed 333 \
     --epochs 100000 \
     --lr_decay_every 5000 \
     --num_epoch_every_visu 50 \
     --num_batch_every_visu 1 \
     --fix_mask_net \
-    --network_weights '../exp_shape_masks/logs/exp-Chair-3-final-model_v2_nosem-mask-C-3-vanilla-2/ckpts/305_net_network.pth \
+    --network_weights '../exp_shape_masks/logs/exp-Chair-3-final-model_v2_nosem-mask-C-3-vanilla-2/ckpts/305_net_network.pth' \
     --pretrain_resnet \
     --overwrite

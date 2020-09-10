@@ -184,7 +184,6 @@ def forward(batch, data_features, network, conf, \
         is_val=False, step=None, epoch=None, batch_ind=0, num_batch=1, start_time=0, \
         log_console=False, log_tb=False, tb_writer=None, lr=None):
     # prepare input
-    # generate a batch of data size  < 40, expand data size of 
     batch_index = 1
     if len(batch) == 0:
         return None
@@ -194,9 +193,6 @@ def forward(batch, data_features, network, conf, \
     input_img = batch[data_features.index('img')][0]                                                    # 3 x H x W
     input_img = input_img.repeat(input_total_part_cnt, 1, 1, 1)                            # part_cnt 3 x H x W
     input_pts = batch[data_features.index('pts')][0].squeeze(0)[:input_total_part_cnt]
-    # input_box_size = batch[data_features.index('box_size')][0].squeeze(0)[:input_total_part_cnt]                             # part_cnt x N x 3
-                                 # part_cnt x N x 3
-    # input_sem_one_hot = batch[data_features.index('sem_one_hot')][0].squeeze(0)[:input_total_part_cnt]             # part_cnt x K
     input_ins_one_hot = batch[data_features.index('ins_one_hot')][0].squeeze(0)[:input_total_part_cnt]             # part_cnt x max_similar_parts
     input_similar_part_cnt = batch[data_features.index('similar_parts_cnt')][0].squeeze(0)[:input_total_part_cnt]  # part_cnt x 1    
     input_shape_id = [batch[data_features.index('shape_id')][0]]*input_total_part_cnt
@@ -205,7 +201,6 @@ def forward(batch, data_features, network, conf, \
     gt_cam_dof = batch[data_features.index('parts_cam_dof')][0].squeeze(0)[:input_total_part_cnt]
     gt_mask = [batch[data_features.index('mask')][0].squeeze(0)[:input_total_part_cnt].to(conf.device)]  
     input_total_part_cnt = [batch[data_features.index('total_parts_cnt')][0]]
-    # input_adj = [batch[data_features.index('adj')][0]]
     input_similar_parts_edge_indices = [batch[data_features.index('similar_parts_edge_indices')][0].to(conf.device)]
     while total_part_cnt < 70 and batch_index < cur_batch_size:
         cur_input_cnt = batch[data_features.index('total_parts_cnt')][batch_index]
@@ -217,11 +212,8 @@ def forward(batch, data_features, network, conf, \
         cur_batch_img = batch[data_features.index('img')][batch_index].repeat(cur_input_cnt, 1, 1, 1)
         input_img = torch.cat((input_img, cur_batch_img), dim=0)                
         input_pts = torch.cat((input_pts, batch[data_features.index('pts')][batch_index].squeeze(0)[:cur_input_cnt]), dim=0)
-        # input_box_size = torch.cat((input_box_size, batch[data_features.index('box_size')][batch_index].squeeze(0)[:cur_input_cnt]), dim=0)                            # B x max_parts x N x 3
-        # input_sem_one_hot = torch.cat((input_sem_one_hot, batch[data_features.index('sem_one_hot')][batch_index].squeeze(0)[:cur_input_cnt]), dim=0)    # B x max_parts x K
         input_ins_one_hot = torch.cat((input_ins_one_hot, batch[data_features.index('ins_one_hot')][batch_index].squeeze(0)[:cur_input_cnt]), dim=0)    # B x max_parts x max_similar_parts
         input_total_part_cnt.append(batch[data_features.index('total_parts_cnt')][batch_index])                             # 1
-        # input_adj.append(batch[data_features.index('adj')][batch_index])
         input_similar_part_cnt = torch.cat((input_similar_part_cnt, batch[data_features.index('similar_parts_cnt')][batch_index].squeeze(0)[:cur_input_cnt]), dim=0)  # B x max_parts x 2    
         input_shape_id += [batch[data_features.index('shape_id')][batch_index]] *cur_input_cnt
         input_view_id += [batch[data_features.index('view_id')][batch_index]] * cur_input_cnt
@@ -240,7 +232,6 @@ def forward(batch, data_features, network, conf, \
     gt_quat = gt_cam_dof[:, 3:]     # B x 4
     batch_size = input_img.shape[0]
     num_point = input_pts.shape[1]
-    # num_sem = input_sem_one_hot.shape[1]
     
 
     # forward through the network
@@ -429,13 +420,6 @@ def forward(batch, data_features, network, conf, \
                         fout.write('l2_rot_loss: %f\n' % l2_rot_loss_per_data[i].item())
                         fout.write('shape_chamfer_loss %f\n' % shape_chamfer_loss.item())
                 
-            if batch_ind == conf.num_batch_every_visu - 1:
-                # visu html
-                utils.printout(conf.flog, 'Generating html visualization ...')
-                sublist = 'input_img,input_pts,gt_mask,pred_mask,gt_dof,pred_dof,pred_dof2,info'
-                cmd = 'cd %s && python %s . 10 htmls %s %s > /dev/null' % (out_dir, os.path.join(BASE_DIR, '../utils/gen_html_hierachy_local.py'), sublist, sublist)
-                call(cmd, shell=True)
-                utils.printout(conf.flog, 'DONE')
 
     return total_loss
 

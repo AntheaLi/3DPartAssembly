@@ -26,7 +26,7 @@ Autonomous assembly is a crucial capability for robots in many applications. For
 ## Dependencies
 * Python 3.6
 * CUDA 10.0.
-* [PyTorch](http://pytorch.org/). Codes are tested with version 1.3.1
+* [PyTorch](http://pytorch.org/). code tested with version 1.3.1
 * [Blender](https://www.blender.org/). for visualization of results
 * (Optional) [Tensorboard](https://www.tensorflow.org/) for visualization of the training process. 
 ```

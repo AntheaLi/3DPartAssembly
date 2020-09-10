@@ -27,14 +27,20 @@ Autonomous assembly is a crucial capability for robots in many applications. For
 * Python 3.6
 * CUDA 10.0.
 * [PyTorch](http://pytorch.org/). Codes are tested with version 1.3.1
+* [Blender](https://www.blender.org/). for visualization of results
 * (Optional) [Tensorboard](https://www.tensorflow.org/) for visualization of the training process. 
 ```
 pip install -r requirements.txt
 ```
 
-## Dataset 
+* Chamfer Distance
+```
+cd exps/utils/cd
+python setup.py install
+```
 
-Please contact us to aquire the dataset.
+## Dataset 
+Coming soon at this [link](about:blank).
 
 ## Training
 

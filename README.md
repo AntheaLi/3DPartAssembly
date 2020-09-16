@@ -40,7 +40,10 @@ python setup.py install
 ```
 
 ## Dataset 
-Coming soon at this [link](about:blank).
+Data is available here: [link](http://download.cs.stanford.edu/orion/impartass/assembly_data.zip).
+```
+wget http://download.cs.stanford.edu/orion/impartass/assembly_data.zip
+```
 
 ## Training
 
@@ -59,7 +62,10 @@ sh train.sh
 
 ## Pre-trained models
 
-Coming Soon ... at this [link](about:blank). 
+Pretrained weights for the chair category is available at [link](http://download.cs.stanford.edu/orion/impartass/chair_weights.zip). 
+```
+wget http://download.cs.stanford.edu/orion/impartass/chair_weights.zip
+```
 
 
 ## Cite

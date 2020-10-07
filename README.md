@@ -1,7 +1,5 @@
 # Learning 3D Part Assembly from a Single Image
 
-##### repository under construction
-
 This repository contains a PyTorch implementation of the paper:
 
 [Learning 3D Part Assembly from A Single Image](https://arxiv.org/abs/2003.09754). 

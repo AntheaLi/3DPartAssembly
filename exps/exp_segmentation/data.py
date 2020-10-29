@@ -12,13 +12,12 @@ from PIL import Image
 class PartNetShapeDataset(data.Dataset):
 
     def __init__(self, category, data_dir, data_features, data_split='train', \
-            max_num_mask=150 , max_num_similar_parts=10, num_points = 1000, img_size=224, on_kaichun_machine=False):
+            max_num_mask=150 , max_num_similar_parts=10, num_points = 1000, img_size=224):
         # store parameters
         self.data_dir = data_dir
         self.data_split = data_split
         self.category = category
         self.img_size = img_size
-        self.on_kaichun_machine = on_kaichun_machine
         self.max_num_similar_parts = max_num_similar_parts
         self.max_num_mask = max_num_mask
         self.num_points = num_points

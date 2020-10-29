@@ -29,13 +29,13 @@ class PartNetShapeDataset(data.Dataset):
         # load data
         self.data = []
         if 'Chair-mixed' in self.category or'Table-mixed' in self.category:
-            self.data_path = os.path.join('/orion/u/liyichen/assembly/assembly/assembly/stats/train_test_splits/{}-{}.txt'.format(self.category[:11], self.data_split))
+            self.data_path = os.path.join('../../stats/train_test_splits/{}-{}.txt'.format(self.category[:11], self.data_split))
         elif 'Chair-3' in self.category or'Table-3' in self.category:
-            self.data_path = os.path.join('/orion/u/liyichen/assembly/assembly/assembly/stats/train_test_splits/{}-{}.txt'.format(self.category[:7], self.data_split))
+            self.data_path = os.path.join('../../stats/train_test_splits/{}-{}.txt'.format(self.category[:7], self.data_split))
         elif 'StorageFurniture-3' in self.category:
-            self.data_path = os.path.join('/orion/u/liyichen/assembly/assembly/assembly/stats/train_test_splits/{}-{}.txt'.format(self.category[:18], self.data_split))
+            self.data_path = os.path.join('../../stats/train_test_splits/{}-{}.txt'.format(self.category[:18], self.data_split))
         else:
-            self.data_path = os.path.join('/orion/u/liyichen/assembly/assembly/assembly/stats/train_test_splits/{}-{}.txt'.format(self.category[:22], self.data_split))
+            self.data_path = os.path.join('../../stats/train_test_splits/{}-{}.txt'.format(self.category[:22], self.data_split))
 
         with open(self.data_path, 'r') as f:
             for line in f:
@@ -47,7 +47,7 @@ class PartNetShapeDataset(data.Dataset):
         self.part_sems = []
         self.part_sem2id = dict()
         if not 'mixed' in self.category:
-            with open(os.path.join('/orion/u/kaichun/projects/assembly/stats/part_semantics/', self.category.split('-')[0]+'-level-'+ self.category.split('-')[1]+'.txt'), 'r') as fin:
+            with open(os.path.join('../../stats/part_semantics/', self.category.split('-')[0]+'-level-'+ self.category.split('-')[1]+'.txt'), 'r') as fin:
                 for i, l in enumerate(fin.readlines()):
                     _, part_sem, _ = l.rstrip().split()
                     self.part_sems.append(part_sem)

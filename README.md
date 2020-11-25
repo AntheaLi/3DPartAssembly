@@ -27,6 +27,7 @@ Autonomous assembly is a crucial capability for robots in many applications. For
 * [PyTorch](http://pytorch.org/). code tested with version 1.3.1
 * [Blender](https://www.blender.org/). for visualization of results [2.7.9](https://download.blender.org/release/Blender2.79/)
 * (Optional) [Tensorboard](https://www.tensorflow.org/) for visualization of the training process. 
+* For the project it has been used [TensorboardX](https://github.com/lanpa/tensorboard-pytorch) 
 ```
 pip install -r requirements.txt
 ```
@@ -51,6 +52,7 @@ cd exps/exp_segmentation
 sh train.sh 
 ```
 modify your parameters including data_path, exp_name and etc.
+(see closed issues for details info)
 
 #### Training the assembly stage
 ```

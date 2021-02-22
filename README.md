@@ -67,7 +67,6 @@ Pretrained weights for the chair category is available at [link](http://download
 wget http://download.cs.stanford.edu/orion/impartass/chair_weights.zip
 ```
 
-
 ## Cite
 Please cite our work if you find it useful:
 ```latex

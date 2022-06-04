@@ -205,7 +205,7 @@ class Network(nn.Module):
         self.ins_dim = conf.ins_dim
         self.pointnet = PointNet(conf.pointnet_emd_dim)
         self.box_dim = 3
-        self.dim_len = conf.pointnet_emd_dim + conf.ins_dim + self.box_dim
+        self.dim_len = conf.pointnet_emd_dim + conf.ins_dim # + self.box_dim
         self.unet = UNet(self.dim_len + 256, \
             in_channels=3, n_classes=1, padding=True, batch_norm=True)
         self.softmax = nn.Softmax(dim=0)
@@ -232,7 +232,7 @@ class Network(nn.Module):
             img[:, 1] = (img[:, 1] - 0.456) / 0.224
             img[:, 2] = (img[:, 2] - 0.406) / 0.225
 
-        cond_feat = torch.cat([pc_feat, box_size, ins_feat], dim=1)
+        cond_feat = torch.cat([pc_feat, ins_feat], dim=1) #box_size
 
         global_part_feat = torch.relu(self.mlp1(cond_feat))
         

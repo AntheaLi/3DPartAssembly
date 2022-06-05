@@ -205,7 +205,7 @@ class Network(nn.Module):
         self.ins_dim = conf.ins_dim
         self.pointnet = PointNet(conf.pointnet_emd_dim)
         self.box_dim = 3
-        self.dim_len = conf.pointnet_emd_dim + conf.ins_dim # + self.box_dim
+        self.dim_len = conf.pointnet_emd_dim + conf.ins_dim 
         self.unet = UNet(self.dim_len + 256, \
             in_channels=3, n_classes=1, padding=True, batch_norm=True)
         self.softmax = nn.Softmax(dim=0)
@@ -213,7 +213,7 @@ class Network(nn.Module):
         self.mlp1 = nn.Linear(self.dim_len, 256)
         self.mlp2 = nn.Linear(256, 256)
 
-    def forward(self, img, pc, ins_feat, box_size, part_cnt):
+    def forward(self, img, pc, ins_feat, part_cnt):
         '''
             input:
             img:            max_parts x 3 x H x W

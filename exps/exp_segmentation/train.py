@@ -205,8 +205,7 @@ def forward(batch, data_features, network, conf, \
     num_point = input_pts.shape[1]
 
     # forward through the network
-    pred_masks = network(input_img - 0.5, input_pts, input_ins_one_hot, input_box_size, input_total_part_cnt)
-    
+    pred_masks = network(input_img - 0.5, input_pts, input_ins_one_hot, input_total_part_cnt)
     # perform matching and calculate masks 
     mask_loss_per_data = []; t = 0;
     matched_pred_mask_all = torch.zeros(batch_size, 224, 224); matched_gt_mask_all = torch.zeros(batch_size, 224, 224) 
